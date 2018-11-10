@@ -1,12 +1,13 @@
 package com.rankingGame.rankingGame.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.rankingGame.rankingGame.model.Player;
 
-public interface PlayerRepository extends CrudRepository<Player, String>{
-
-	public Player findByCod(long cod);
+public interface PlayerRepository extends JpaRepository<Player, Long>{
 	
-	public Iterable<Player> findAllByOrderByVictoriesDesc();
+	public Player findByCod(long cod);
+	public List<Player> findAllByOrderByVictoriesDesc();
 }
