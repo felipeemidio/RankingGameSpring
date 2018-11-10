@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt"
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://thymeleaf.org">
+<head>
+	<link type="text/css" rel="stylesheet" href="css/defaultStyle.css"/>
+</head>	
+<body>	
+<div class="alert alert-success alert-dismissible" role="alert" th:if="${not #strings.isEmpty(message)}">
+	
+	<font color="red"><span class="defaultMargin" th:text="${message}"></span></font>
+</div>
+</body>						
+</html>

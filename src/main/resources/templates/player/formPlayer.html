@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlsn:th="http://thymeleaf.org"
+	xmlsn:layout="https://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>RankingGameApp</title>
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+	
+	<link type="text/css" rel="stylesheet" href="css/defaultStyle.css"/>
+	
+	<!-- Load pattern UTF-8 -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+</head>
+	
+<body>
+	<h1 class="defaultMargin">Cadastro de Jogador</h1>
+	<h3 class="defaultMargin"><a href="/players" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Lista de Jogador</a></h3>
+	<th:block th:include="validationMessage"></th:block>
+	<form class="container" method="post">
+		Nome: <input type="text" value="" name="name"/>
+		<div class="row">
+			<div class="input-field col s6">
+				Quantidade de Partidas: <input type="number" value="0" min="0" name="numberOfGames"/>
+			</div>
+			<div class="input-field col s6">
+				Quantidade de Vitórias: <input type="number" value="0" min="0" name="victories"/>
+			</div>
+		</div>
+		<button type="submit" class="waves-effect waves-light btn">Salvar</button>
+	</form>
+	
+	<!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>
