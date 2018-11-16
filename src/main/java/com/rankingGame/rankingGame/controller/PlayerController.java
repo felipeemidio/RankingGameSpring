@@ -103,4 +103,21 @@ public class PlayerController {
 		pr.save(player);
 		return ResponseEntity.ok(player);
 	}
+	
+	/*
+	 * Search for a player given the id.
+	 * this function is only used in test.
+	 * @param id the primary key of the player.
+	 * @return   the asked player.
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<Player> search(@PathVariable long id){
+		Player player = pr.findByCod(id);
+		
+		if(player == null) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.ok(player);
+	}
 }

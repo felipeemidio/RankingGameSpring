@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+/*
+ * Use this class to make the http requests for the tests.
+ */
 public class MyHttpRequester {
 	RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<String> response;
@@ -27,5 +30,9 @@ public class MyHttpRequester {
 	public void executeDelete(String url) {
 	    //restTemplate.delete(url);
 	    response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+	}
+	
+	public void executePut(String url) {
+		response = restTemplate.exchange(url, HttpMethod.PUT, null, String.class);
 	}
 }
