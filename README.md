@@ -13,4 +13,4 @@ A simple backend of a ranking of some random game using Springs Boot.
 * Click with the roght mouse button in the project and select __'Run as'>'Java Application'__
 
 ## License
-Este projeto segue o modelo de licença [Creative Commons BY](https://br.creativecommons.org/licencas/).
+This projects follows the license [Creative Commons BY](https://br.creativecommons.org/licencas/).
