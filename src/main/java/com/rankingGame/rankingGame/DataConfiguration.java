@@ -10,6 +10,9 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+/*
+ * Class for configure the database and the Hibernate.
+ */
 @Configuration
 @EnableWebMvc
 public class DataConfiguration {

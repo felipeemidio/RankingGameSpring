@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,60 +14,51 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rankingGame.rankingGame.model.Player;
+import com.rankingGame.rankingGame.model.PlayerService;
 import com.rankingGame.rankingGame.repository.PlayerRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/players")
 public class PlayerController {
 	
 	@Autowired
 	private PlayerRepository pr;
+	private PlayerService service = new PlayerService();
 	
-	@RequestMapping(value="/registerPlayer", method=RequestMethod.GET)
-	public String form() {
-		return "player/formPlayer";
-	}
-	
+	/*
+	 * Save a new player in the database.
+	 * 
+	 * @param player the data of the new player.
+	 * @return       A ResponseEntity with the new player.
+	 */
 	@PostMapping
-	public Player form(@Valid @RequestBody Player player) {
-		return pr.save(player);
+	public ResponseEntity<Player> save(@Valid @RequestBody Player player) {
+		System.out.println("Saving");
+		pr.save(player);
+		return ResponseEntity.ok(player);
 	}
 	
+	/*
+	 * Get a list of all player sorted by victories.
+	 * 
+	 * @return   A List with all players.
+	 */
 	@GetMapping
-	public List<Player> PlayersList() {
+	public List<Player> playersList() {
 		List<Player> players = pr.findAllByOrderByVictoriesDesc();
 		return players;
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<Player> search(@PathVariable long id){
-		Player player = pr.findByCod(id);
-		
-		if(player == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(player);
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Player> updatePlayer(@PathVariable long id, 
-			@Valid @RequestBody Player newPlayer) {
-		Player oldPlayer = pr.findByCod(id);
-		
-		if(oldPlayer == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		BeanUtils.copyProperties(newPlayer, oldPlayer, "cod");
-		oldPlayer = pr.save(oldPlayer);
-		return ResponseEntity.ok(oldPlayer);
-	}
-	
+	/*
+	 * Delete a player from the database.
+	 * 
+	 * @param id the primary key of the player.
+	 * @return   A ResponseEntity w/ code 204 - No Content or 404 - File not Found
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Player> deletePlayer(@PathVariable long id) {
 		Player player = pr.findByCod(id);
@@ -78,32 +69,38 @@ public class PlayerController {
 		pr.delete(player);
 		return ResponseEntity.noContent().build();
 	}
-	/*
-	@RequestMapping(value="/delete", method=RequestMethod.GET)
-	public String deletePlayer(long cod) {
-		Player player = pr.getOne(cod);
-		pr.delete(player);
-		return "redirect:/players"; 
-	}
 	
-	@RequestMapping(value="/addV", method=RequestMethod.GET)
-	public String addVictory(long cod) {
-		Player player = pr.getOne(cod);
-		if(player.getVictories()+1 <= player.getNumberOfGames() ) {
+	/*
+	 * Increment the victory variable.
+	 * 
+	 * @param id the primary key of the player.
+	 * @return   A ResponseEntity with badRequest or the new Player.
+	 */
+	@PutMapping("/addVictory/{id}")
+	public ResponseEntity<Player> addVictory(@PathVariable long id) {
+		Player player = pr.findByCod(id);
+		if(player == null) {
+			System.out.println("ERROR - Player " + id + " not found");
+			return ResponseEntity.badRequest().build();
+		}
+		if( service.canIncrementVictory(player) ) {
 			player.setVictories(player.getVictories() + 1);
 			pr.save(player);
 		}
-		return "redirect:/players";
+		return ResponseEntity.ok(player);
 	}
 	
-	@RequestMapping(value="/addG", method=RequestMethod.GET)
-	public String addGame(long cod) {
-		Player player = pr.getOne(cod);
+	/*
+	 * Increment the numberOfGames variable.
+	 * 
+	 * @param id the primary key of the player.
+	 * @return   the updated player.
+	 */
+	@PutMapping("/addGame/{id}")
+	public ResponseEntity<Player> addGame(@PathVariable long id) {
+		Player player = pr.findByCod(id);
 		player.setNumberOfGames(player.getNumberOfGames() + 1);
 		pr.save(player);
-		return "redirect:/players";
+		return ResponseEntity.ok(player);
 	}
-	*/
-	
-	
 }
