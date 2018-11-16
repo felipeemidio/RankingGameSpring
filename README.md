@@ -1,5 +1,6 @@
 # RankingGameSpring
 A simple backend of a ranking of some random game using Springs Boot.
+This project is the back-end of the [RankingGameAngular](https://github.com/felipeemidio/RankingGameAngular).
 
 
 ## Pré-requisites
