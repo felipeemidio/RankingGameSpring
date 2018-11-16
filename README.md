@@ -12,6 +12,7 @@ This project is the back-end of the [RankingGameAngular](https://github.com/feli
 * Extract it somewhere
 * In Eclipse select __'File'>'Imports'>'Maven'>'Existing Maven Project'__
 * Click with the roght mouse button in the project and select __'Run as'>'Java Application'__
+* Open the _DataConfiguration.java_ and changes the database variables as your needs. 
 
 ## License
 This projects follows the license [Creative Commons BY](https://br.creativecommons.org/licencas/).
